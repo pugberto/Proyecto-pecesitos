@@ -24,13 +24,13 @@ begin
 	declare tanque_habitat varchar(6);
     
 	select habitat into tanque_habitat
-    from tanque 
-    where Numero_tanque = new.Numero_tanque;
+	from tanque 
+    	where Numero_tanque = new.Numero_tanque;
     
-    if new.habitat != tanque_habitat then 
+    	if new.habitat != tanque_habitat then 
 		signal sqlstate '45000'
 		set message_text = "Los habitats no coiciden. No se puede realizar la inserción";
-    end if;
+	end if;
 end // 
 delimiter ;
 
