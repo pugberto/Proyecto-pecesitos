@@ -24,13 +24,13 @@ begin
 	declare tanque_habitat varchar(6);
     
 	select habitat into tanque_habitat
-	from tanque 
-    	where Numero_tanque = new.Numero_tanque;
+    from tanque 
+    where Numero_tanque = new.Numero_tanque;
     
-    	if new.habitat != tanque_habitat then 
+    if new.habitat != tanque_habitat then 
 		signal sqlstate '45000'
 		set message_text = "Los habitats no coiciden. No se puede realizar la inserción";
-	end if;
+    end if;
 end // 
 delimiter ;
 
@@ -42,4 +42,19 @@ begin
     from Vida_marina
     where habitat = habi;
 end // 
+delimiter ;
+
+-- Función para obtener el total de vida marina que hay en un tanque --
+delimiter //
+create function total_vida_marina_tanque(tanque int) returns int
+deterministic
+begin 
+	declare cantidad int;
+    
+    select count(*) into cantidad
+    from Vida_marina
+    where Numero_tanque = tanque;
+    
+	return cantidad;
+end //
 delimiter ;
